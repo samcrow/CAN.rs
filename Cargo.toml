@@ -1,0 +1,11 @@
+[package]
+authors = ["Sam Crow <samcrow@uw.edu>"]
+name = "can"
+authors = ["Sam Crow <samcrow@uw.edu>"]
+version = "0.1.0"
+description = "Types and traits for CAN bus (Controller Area Network) communication"
+repository = "https://github.com/samcrow/CAN.rs"
+license = "MIT/Apache-2.0"
+
+[dependencies]
+quick-error = "^1.1.0"
