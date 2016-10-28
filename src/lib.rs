@@ -1,3 +1,15 @@
+
+#![deny(
+    missing_docs,
+    trivial_casts,
+    missing_debug_implementations
+)]
+
+//!
+//! This library provides types and traits for CAN sending and receiving. It does not contain
+//! implementations for sending and receiving.
+//!
+
 #[macro_use]
 extern crate quick_error;
 
