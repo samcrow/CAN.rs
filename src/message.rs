@@ -1,16 +1,51 @@
 
+use std::cmp::Ordering;
+
 /// 11-bit ID mask
 const SHORT_MASK: u16 = 0x7ff;
 /// 29-bit ID mask
 const EXTENDED_MASK: u32 = 0x1fffffff;
 
 /// A CAN message identifier
-#[derive(Debug, Clone, PartialEq)]
+///
+/// Message identifiers can be compared and ordered by their underlying values, regardless of
+/// whether they are short or extended.
+#[derive(Debug, Clone)]
 pub enum Id {
     /// A short CAN ID of up to 11 bits
     Short(u16),
     /// An extended CAN ID of up to 29 bits
     Extended(u32),
+}
+
+impl Id {
+    /// Returns the value of this ID as a u32. If this ID is short, it is expanded.
+    fn as_extended(&self) -> u32 {
+        match *self {
+            Id::Short(short) => short.into(),
+            Id::Extended(extended) => extended,
+        }
+    }
+}
+
+impl PartialEq for Id {
+    fn eq(&self, other: &Self) -> bool {
+        self.as_extended().eq(&other.as_extended())
+    }
+}
+
+impl Eq for Id { }
+
+impl PartialOrd for Id {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        self.as_extended().partial_cmp(&other.as_extended())
+    }
+}
+
+impl Ord for Id {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.as_extended().cmp(&other.as_extended())
+    }
 }
 
 impl Id {
